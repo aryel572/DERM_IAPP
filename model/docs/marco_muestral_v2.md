@@ -5,7 +5,8 @@
 > **Estado:** **APROBADO** (decisión del equipo con el PO; Sprint 1, 5–16 de octubre de 2026).
 > **Alcance:** norma obligatoria para los notebooks del pipeline (preparación de datos, marco de
 > evaluación y evaluación) y para cualquier re-generación del dataset. **Es LA referencia de los
-> notebooks `03_preparacion_datos.ipynb`, `04_marco_evaluacion.ipynb` y `07_evaluacion.ipynb`.**
+> notebooks `01_descarga_verificacion.ipynb`, `03_limpieza_etiquetado.ipynb`,
+> `04_particionado_90_subconjuntos.ipynb` y `07_evaluacion.ipynb`.**
 > **Reemplaza al marco v1** (60 subconjuntos GC/GE de solo-test, generados con el script
 > `PRODUCTO/DATA/03_regenerar_evaluacion.py` en `PRODUCTO/DATA/evaluacion_oficial/`), que queda
 > como artefacto histórico.
@@ -263,7 +264,7 @@ Un tamaño que no coincida byte a byte es un fallo duro (abortar con mensaje cla
 | `edad` | int \| nulo | `age_approx` (0 → nulo; 0,4 % faltante real) |
 | `sexo` | str \| nulo | `female` \| `male` \| nulo (`nan` literal → nulo) |
 | `sitio` | str \| nulo | `anatom_site_general` (`nan` literal → nulo) |
-| `ruta` | str | Ruta relativa del JPG dentro de `dataset/` |
+| `ruta` | str | Ruta relativa del JPG dentro de `dataset/` para imágenes asignadas a TEST/TRAIN/VAL; las imágenes `no_usadas` llevan ruta relativa dentro de `data_cruda/` (convención definida y aplicada en model/docs/S2_data_preparation.md §4.3) |
 | `sha256` | str | Hash de la imagen (integridad y auditoría) |
 | `destino_asignado` | str | `TEST_TA` \| `TEST_NFS` \| `TEST_PEO` \| `TRAIN_BCC` \| `TRAIN_NOBCC` \| `VAL_BCC` \| `VAL_NOBCC` \| `no_usadas` |
 
@@ -314,9 +315,12 @@ Un tamaño que no coincida byte a byte es un fallo duro (abortar con mensaje cla
 | R11 | El modelo solo recibe píxel (imagen): los metadatos del parquet nunca son entrada de la red | 05, 06 |
 | R12 | Exportación del modelo ganador a `.tflite` versionado con manifiesto (versión, input size, normalización, umbral, SHA-256) | 06 |
 
-**Notebooks de referencia del diseño:** `03_preparacion_datos.ipynb` (pool, balanceo, split),
-`04_marco_evaluacion.ipynb` (90 subconjuntos), `07_evaluacion.ipynb` (TA/NFS/PEO por
-subconjunto, GC vs. GE, Mann-Whitney).
+**Notebooks de referencia del diseño:** `01_descarga_verificacion.ipynb` (descarga y
+verificación de los 6 archivos oficiales), `03_limpieza_etiquetado.ipynb` (pool fusionado y
+parquet maestro), `04_particionado_90_subconjuntos.ipynb` (reserva TEST, balanceo, split, árbol
+físico y manifiestos), `07_evaluacion.ipynb` (TA/NFS/PEO por subconjunto, GC vs. GE,
+Mann-Whitney). Nombres actualizados en v2.2 (ver historial); la numeración de la columna
+«Aplica a» se mantiene (02 = EDA del Sprint 1).
 
 ---
 
@@ -363,6 +367,7 @@ subconjunto, GC vs. GE, Mann-Whitney).
 | v1 (obsoleto) | oct 2026 | 60 subconjuntos GC/GE de solo-test (30 img, 15+15), semilla 2026, script `03_regenerar_evaluacion.py`; techo de BCC 975 |
 | **v2 (vigente)** | 16 oct 2026 (aprobado) | Marco normativo de este documento: pool fusionado 31 469 (techo BCC 4 298), 90 subconjuntos en 3 familias TA/NFS/PEO, remanente balanceado 1:1, split 80/20 por lesión, semilla 2026 |
 | v2.1 | 04 nov 2026 | Formalización documental del Sprint 1: reubicación del documento a `model/docs/` (convención del repo: `model/` = pipeline CRISP-DM); se añaden la mezcla de balanceo aprobada (≈48/26/12/7 %) a §4.1, la tabla de tamaños byte-exactos de descarga a §5.1 y las limitaciones 4–7 de §10 |
+| v2.2 | 04 nov 2026 | Sprint 2 (Fase 3, ver `S2_data_preparation.md`): nombres de los notebooks de referencia actualizados a la numeración real del pipeline (NB01 `01_descarga_verificacion`, NB03 `03_limpieza_etiquetado`, NB04 `04_particionado_90_subconjuntos`; NB02 es el EDA del Sprint 1) en el encabezado y §8; se precisa la semántica de la columna `ruta` del parquet (dataset/-relativa para imágenes con copia física; data_cruda/-relativa para `no_usadas`). Sin cambios en reglas R1–R12 ni en los invariantes I1–I10 |
 
 *Documento normativo del diseño de datos v2 · DERM_IAPP · pipeline CRISP-DM · Sprint 1
 (retroactivo, 5–16/10/2026). Cualquier desviación de estas reglas debe aprobarse con el PO y
