@@ -112,7 +112,7 @@ por lesión (detalle en `marco_muestral_v2.md` §10).
 | 2.1–2.4 Recopilación, descripción, exploración y calidad (Fase 2) | **Completada** | `PRODUCTO/DATA/ANALISIS_DATASET_ISIC2019.md` §1–§7 (vigentes) |
 | Diseño de datos v2 (norma del pipeline) | **Aprobado** | `model/docs/marco_muestral_v2.md` |
 | Análisis de datos actualizado (obsolescencia del marco v1 en §8.4, §8.5 y anexo) | **Completada** | `PRODUCTO/DATA/ANALISIS_DATASET_ISIC2019.md` (nota 2026-11-04) |
-| EDA reproducible en Colab (complemento de la Fase 2) | En curso | `model/notebooks/02_analisis_exploratorio.ipynb` (prompt generado este sprint) |
+| EDA reproducible en Colab (complemento de la Fase 2) | **Completada** | `model/notebooks/02_analisis_exploratorio.ipynb` (ejecutado en el Sprint 2) |
 
 **Decisión de fase: proseguir a la Fase 3 (Data Preparation)** con los notebooks
 `03_preparacion_datos.ipynb` y `04_marco_evaluacion.ipynb`, bajo la norma de
