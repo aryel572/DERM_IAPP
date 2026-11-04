@@ -1,0 +1,33 @@
+# Archivos grandes / generados
+*.zip
+*.tflite
+*.h5
+*.keras
+model/data/cruda/
+model/data/preparada/train_*.csv
+model/data/preparada/val.csv
+model/data/preparada/test.csv
+venv/
+__pycache__/
+*.pyc
+node_modules/
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+*.iml
+.idea/
+.vscode/
+*.log
+
+# Credenciales (NUNCA versionar)
+credenciales.local.json
+credenciales.local.json.bak
+*.pem
+*.key
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+desktop.ini
