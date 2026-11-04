@@ -1,0 +1,2 @@
+# Reglas de análisis recomendadas para proyectos Flutter.
+include: package:flutter_lints/flutter.yaml
